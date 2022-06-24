@@ -23,9 +23,7 @@ const buildInvoiceTaxes = (invoice: Invoice) : InvoiceCalculated => {
 
 const transformInvoices = (invoices: Invoice[]) : InvoiceCalculated[] => invoices.map(buildInvoiceTaxes)
 
-type InvoiceNumberFields = Omit<keyof InvoiceCalculated, 'invoice' | 'client'>
-
-const buildSum = (key: InvoiceNumberFields) => (acc: number, current: InvoiceCalculated) => acc + current[key]
+const buildSum = (key: Exclude<keyof InvoiceCalculated, 'id' | 'client'| 'invoice'>) => (acc: number, current: InvoiceCalculated) => acc + current[key]
 
 const numberToCurrency = (value: number) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
